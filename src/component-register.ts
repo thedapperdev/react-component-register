@@ -1,7 +1,7 @@
 import * as Fs from 'fs'
 import * as Path from 'path'
 import { kebabCase } from 'lodash'
-import { indexFile, componentFile, styledComponentFile } from './templates'
+import { indexFile, componentFile, styledComponentFile } from 'templates'
 
 class ComponentRegister {
   path: string
@@ -47,9 +47,13 @@ class ComponentRegister {
       Fs.existsSync(Path.join(componentPath, 'index.tsx'))
   }
 
+  public isValidComponent(path: string) {
+    return this.isFolder(path) && this.hasIndexFile(path)
+  }
+
   private registerSingle(folderPath: string): void {
     const entirePath = Path.join(this.path, folderPath)
-    if (this.isFolder(entirePath) && this.hasIndexFile(entirePath)) {
+    if (this.isValidComponent(entirePath)) {
       this.components.push(folderPath)
     }
   }
@@ -72,7 +76,6 @@ class ComponentRegister {
     let [, , component]: string[] = process.argv
     component = component && component.includes('=') ?
       (component.split('=')[1] || component) : component
-    
     return component
   }
 

@@ -23,5 +23,4 @@ export const styledComponentFile = (name: string) =>
 
 export const Base${ pascalCase(name) } = styled.div\`
   content: "styling"
-\`
-`
+\``
