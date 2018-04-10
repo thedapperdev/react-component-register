@@ -7,7 +7,6 @@ export default class ComponentRegister {
   public path: string
   components: string[]
   constructor(componentRootPath: string) {
-    console.log(componentRootPath, 'waay')
     this.path = componentRootPath
     this.components = []
     this.registerAll()
@@ -78,7 +77,7 @@ export default class ComponentRegister {
       const componentPath = Path.join(this.path, name)
       if (!Fs.existsSync(componentPath)) {
         Fs.mkdirSync(componentPath)
-        console.log('here')
+
         // write index
         this.writeFile(Path.join(componentPath, 'index.ts'),
           (stream: Fs.WriteStream) => {

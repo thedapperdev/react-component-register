@@ -1,4 +1,4 @@
-import { pascalCase } from 'utils'
+import { pascalCase } from './../../src/utils'
 
 describe('pascalCase function', () => {
   test('that it transforms strings into pascalCase', () => {
