@@ -11,6 +11,7 @@ export default class ComponentRegister {
     this.path = componentRootPath
     this.components = []
     this.registerAll()
+    this.writeIndex()
   }
 
   public writeIndex(): void {
@@ -96,6 +97,7 @@ export default class ComponentRegister {
             stream.write(styledComponentFile(name))
           })
       }
+      this.writeIndex()
     }
   }
 }

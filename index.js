@@ -5,7 +5,7 @@ const program = require('commander')
 const Register = require('./lib/component-register').default
 const Path = require('path')
 const getProcessPath = path => Path.join(process.cwd(), path)
-let reg = new Register(getProcessPath('components'))
+let reg = new Register(getProcessPath('src/components'))
 
 // Path.join(Path.resolve('.'), 'components')
 
@@ -21,11 +21,10 @@ program
 //     reg = new Register(getProcessPath(componentsPath)))
 
 program
-  .command('add <componentName>')
+  .command('* <componentName>')
+  .alias('add')
   .alias('a')
   .description('Add a component')
-  .action(componentName =>
-    reg.createComponent(componentName)
-  )
+  .action(componentName => reg.createComponent(componentName))
 
 program.parse(process.argv)
