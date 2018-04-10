@@ -1,6 +1,6 @@
 
 describe('component register', () => {
-  test('create a folder', () => {
+  test('creates a folder', () => {
     
   })
 })
