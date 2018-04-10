@@ -1,19 +1,19 @@
 import * as Fs from 'fs'
 import * as Path from 'path'
 import { kebabCase } from 'lodash'
-import { indexFile, componentFile, styledComponentFile } from 'templates'
+import { indexFile, componentFile, styledComponentFile } from './templates'
 
-class ComponentRegister {
-  path: string
+export default class ComponentRegister {
+  public path: string
   components: string[]
   constructor(componentRootPath: string) {
+    console.log(componentRootPath, 'waay')
     this.path = componentRootPath
     this.components = []
-    this.createComponent()
     this.registerAll()
   }
 
-  writeIndex(): void {
+  public writeIndex(): void {
     this.writeFile(Path.join(this.path, 'index.ts'), (stream: Fs.WriteStream)  => {
       this.components.sort().forEach(component => {
         stream.write(`export * from './${ component }'\r\n`)
@@ -72,40 +72,31 @@ class ComponentRegister {
     })
   }
 
-  private getComponentArg() {
-    let [, , component]: string[] = process.argv
-    component = component && component.includes('=') ?
-      (component.split('=')[1] || component) : component
-    return component
-  }
-
-  private createComponent(): void {
-    const component = this.getComponentArg()
-    if (component) {
-      const componentPath = Path.join(this.path, component)
+  public createComponent(name: string): void {
+    if (name) {
+      const componentPath = Path.join(this.path, name)
       if (!Fs.existsSync(componentPath)) {
         Fs.mkdirSync(componentPath)
-
+        console.log('here')
         // write index
         this.writeFile(Path.join(componentPath, 'index.ts'),
           (stream: Fs.WriteStream) => {
-            stream.write(indexFile(component))
+            stream.write(indexFile(name))
           })
 
         //  write tsx
-        this.writeFile(Path.join(componentPath, `${ kebabCase(component) }.tsx`),
+        this.writeFile(Path.join(componentPath, `${ kebabCase(name) }.tsx`),
           (stream: Fs.WriteStream) => {
-            stream.write(componentFile(component))
+            stream.write(componentFile(name))
           })
 
         //  write styled-component
-        this.writeFile(Path.join(componentPath, `styled-${ kebabCase(component) }.ts`),
+        this.writeFile(Path.join(componentPath, `styled-${ kebabCase(name) }.ts`),
           (stream: Fs.WriteStream) => {
-            stream.write(styledComponentFile(component))
+            stream.write(styledComponentFile(name))
           })
       }
     }
   }
 }
 
-new ComponentRegister('./src/components').writeIndex()

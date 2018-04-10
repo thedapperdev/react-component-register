@@ -1,5 +1,5 @@
 import { kebabCase } from 'lodash/fp'
-import { pascalCase } from 'utils'
+import { pascalCase } from './../utils'
 
 export const indexFile = (name: string) =>
   `export { default as ${ pascalCase(name) } } from './${ kebabCase(name) }'`
