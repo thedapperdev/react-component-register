@@ -1,13 +1,23 @@
 {
   "compilerOptions": {
-    /* Basic Options */
-    "target": "es5",                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
+    "target": "es5",
+    "baseUrl": "src",
+    "paths": {
+      "utils": [ "utils" ],
+      "templates": [ "templates/" ],
+    },
     "module": "commonjs",
+    "moduleResolution": "node",
     "strict": true,
     "outDir": "lib",
     "sourceMap": true,
     "typeRoots": [
       "node_modules/@types"
-    ]
-  }
+    ],
+  },
+  "exclude": [
+    "node_modules",
+    "__tests__",
+    "components",
+  ],
 }
